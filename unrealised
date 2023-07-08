@@ -1,0 +1,348 @@
+/*		else
+		{
+		if (n == 5)
+		{
+			minx = miny = 20000;
+			maxx = maxy = -20000;
+			for (int i = 0; i < n; i++)
+			{
+				tx = crds[i].getx();
+				ty = crds[i].gety();
+				if (tx < minx) minx = tx; if (tx > maxx) maxx = tx;
+				if (ty < miny) miny = ty; if (ty > maxy) maxy = ty;
+			}
+			for (int i = 0; i < n; i++)
+			{
+				tx = crds[i].getx();
+				ty = crds[i].gety();
+				if (tx > minx)
+				{
+					if (tx < maxx)
+					{
+						if (ty > miny)
+						{
+							if (ty < maxy) c++;
+							else continue;
+						}
+						else continue;
+					}
+					else continue;
+				}
+				else continue;
+				if (c == 2)
+				{
+					//Определить, какие 2 вершины внутри.
+					for (int i = 0; i < n; i++)
+					{
+						tx = crds[i].getx();
+						ty = crds[i].gety();
+						if (tx > minx)
+						{
+							if (tx < maxx)
+							{
+								if (ty > miny)
+								{
+									if (ty < maxy)
+									{
+										if (ig51 == -1) ig51 = i;
+										else ig52 = i;
+									}
+									else continue;
+								}
+								else continue;
+							}
+							else continue;
+						}
+						else continue;
+					}
+					for (int i = 0; i < 5; i++)
+					{
+						if ((i != ig51) || (i != ig52))
+						{
+							frp[j][0] = crds[i].getx();
+							frp[j][1] = crds[i].gety();
+							j++;
+						}
+					}
+					for (int i = 0; i < 5; i++)
+					{
+						treep(crds[i].getx(), crds[i].gety());
+					}
+					setcolor(RGB(255, 0, 255));
+					for (int i = 0; i < 3; i++)
+					{
+						if (i == 2)
+						{
+							x1 = frp[i][0]; x2 = frp[0][0];
+							y1 = frp[i][1]; y2 = frp[0][1];
+							l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+							line(frp[i][0], frp[i][1], frp[i + 1][0], frp[i + 1][1]);
+						}
+						else
+						{
+							x1 = frp[i][0]; x2 = frp[i + 1][0];
+							y1 = frp[i][1]; y2 = frp[i + 1][1];
+							l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+							line(frp[i][0], frp[i][1], frp[i + 1][0], frp[i + 1][1]);
+						}
+					}
+				}
+				else
+				{
+					if (c == 1)
+					{
+						//Определить, какая вершина внутри.
+						for (int i = 0; i < n; i++)
+						{
+							tx = crds[i].getx();
+							ty = crds[i].gety();
+							if (tx > minx)
+							{
+								if (tx < maxx)
+								{
+									if (ty > miny)
+									{
+										if (ty < maxy)
+										{
+											ig51 = i;
+										}
+										else continue;
+									}
+									else continue;
+								}
+								else continue;
+							}
+							else continue;
+						}
+						for (int i = 0; i < 5; i++)
+						{
+							if (i != ig51)
+							{
+								fvp[j][0] = crds[i].getx();
+								fvp[j][1] = crds[i].gety();
+								j++;
+							}
+						}
+						for (int i = 0; i < 5; i++)
+						{
+							treep(crds[i].getx(), crds[i].gety());
+						}
+						setcolor(RGB(255, 0, 255));
+						for (int i = 0; i < 4; i++)
+						{
+							if (i == 3)
+							{
+								x1 = fvp[i][0]; x2 = fvp[0][0];
+								y1 = fvp[i][1]; y2 = fvp[0][1];
+								l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+								line(fvp[i][0], fvp[i][1], fvp[i + 1][0], fvp[i + 1][1]);
+							}
+							else
+							{
+								x1 = fvp[i][0]; x2 = fvp[i + 1][0];
+								y1 = fvp[i][1]; y2 = fvp[i + 1][1];
+								l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+								line(frp[i][0], frp[i][1], frp[i + 1][0], frp[i + 1][1]);
+							}
+						}
+					}
+					else
+					{
+						//Как пятиугольник
+						for (int i = 0; i < 5; i++)
+						{
+							treep(crds[i].getx(), crds[i].gety());
+						}
+						setcolor(RGB(255, 0, 255));
+						for (int i = 0; i < 5; i++)
+						{
+							if (i == 4)
+							{
+								x1 = crds[i].getx(); x2 = crds[0].getx();
+								y1 = crds[i].gety(); y2 = crds[0].gety();
+								l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+								line(crds[i].getx(), crds[i].gety(), crds[0].getx(), crds[0].gety());
+							}
+							else
+							{
+								x1 = crds[i].getx(); x2 = crds[i + 1].getx();
+								y1 = crds[i].gety(); y2 = crds[i + 1].gety();
+								l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+								line(crds[i].getx(), crds[i].gety(), crds[i + 1].getx(), crds[i + 1].gety());
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			if (n == 6)
+			{
+				minx = miny = 20000;
+				maxx = maxy = -20000;
+				for (int i = 0; i < n; i++)
+				{
+					tx = crds[i].getx();
+					ty = crds[i].gety();
+					if (tx < minx) minx = tx; if (tx > maxx) maxx = tx;
+					if (ty < miny) miny = ty; if (ty > maxy) maxy = ty;
+				}
+				for (int i = 0; i < n; i++)
+				{
+					tx = crds[i].getx();
+					ty = crds[i].gety();
+					if (tx > minx)
+					{
+						if (tx < maxx)
+						{
+							if (ty > miny)
+							{
+								if (ty < maxy) c++;
+								else continue;
+							}
+							else continue;
+						}
+						else continue;
+					}
+					else continue;
+				}
+				if (c == 3)
+				{
+					//Определить, какие 3 вершины внутри.
+					for (int i = 0; i < n; i++)
+					{
+						tx = crds[i].getx();
+						ty = crds[i].gety();
+						if (tx > minx)
+						{
+							if (tx < maxx)
+							{
+								if (ty > miny)
+								{
+									if (ty < maxy)
+									{
+										if (ig61 == -1) ig61 = i;
+										else
+											if (ig62 == -1) ig62 = i;
+											else ig63 = i;
+									}
+									else continue;
+								}
+								else continue;
+							}
+							else continue;
+						}
+						else continue;
+					}
+					for (int i = 0; i < 6; i++)
+					{
+						if ((i != ig61) || (i != ig62) || (i != ig63))
+						{
+							frp[j][0] = crds[i].getx();
+							frp[j][1] = crds[i].gety();
+							j++;
+						}
+					}
+					//Как треугольник.
+				}
+				else
+				{
+					if (c == 2)
+					{
+						//Определить, какие 2 вершины внутри.
+						for (int i = 0; i < n; i++)
+						{
+							tx = crds[i].getx();
+							ty = crds[i].gety();
+							if (tx > minx)
+							{
+								if (tx < maxx)
+								{
+									if (ty > miny)
+									{
+										if (ty < maxy)
+										{
+											if (ig61 == -1) ig61 = i;
+											else ig62 = i;
+										}
+										else continue;
+									}
+									else continue;
+								}
+								else continue;
+							}
+							else continue;
+						}
+						for (int i = 0; i < 6; i++)
+						{
+							if ((i != ig61) || (i != ig62))
+							{
+								fvp[j][0] = crds[i].getx();
+								fvp[j][1] = crds[i].gety();
+								j++;
+							}
+						}
+						//Как четырёхугольник.
+					}
+					else
+					{
+						if (c == 1)
+						{
+							for (int i = 0; i < n; i++)
+							{
+								tx = crds[i].getx();
+								ty = crds[i].gety();
+								if (tx > minx)
+								{
+									if (tx < maxx)
+									{
+										if (ty > miny)
+										{
+											if (ty < maxy)
+											{
+												ig61 = i;
+											}
+											else continue;
+										}
+										else continue;
+									}
+									else continue;
+								}
+								else continue;
+							}
+							for (int i = 0; i < 6; i++)
+							{
+								if ((i != ig61))
+								{
+									sxp[j][0] = crds[i].getx();
+									sxp[j][1] = crds[i].gety();
+									j++;
+								}
+							}
+							//Как пятиугольник
+						}
+								else
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				treep(crds[i].getx(), crds[i].gety());
+			}
+			setcolor(RGB(255, 0, 255));
+			for (int i = 0; i < 6; i++)
+			{
+				if (i == 5)
+				{
+					x1 = crds[i].getx(); x2 = crds[0].getx();
+					y1 = crds[i].gety(); y2 = crds[0].gety();
+					l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+					line(crds[i].getx(), crds[i].gety(), crds[0].getx(), crds[0].gety());
+				}
+				else
+				{
+					x1 = crds[i].getx(); x2 = crds[i + 1].getx();
+					y1 = crds[i].gety(); y2 = crds[i + 1].gety();
+					l += sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+					line(crds[i].getx(), crds[i].gety(), crds[i + 1].getx(), crds[i + 1].gety());
+				}
+			}*/
