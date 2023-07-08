@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <conio.h>
 #include <windows.h>
 #include "classes.h"
@@ -264,6 +265,7 @@ void newtonmethod(double x0)
 		x = x - f(x) / df(x);
 		i++;
 	}
+	cout << fixed << setprecision(3);
 	cout << "x1 = +" << x << endl;
 	x *= -1;
 	cout << "x2 = " << x << endl;
