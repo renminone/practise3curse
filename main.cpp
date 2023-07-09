@@ -209,47 +209,92 @@ void fractions()
 	switch (_getch())
 	{
 	case '+':
-		if (Z != H)
+		if ((Y != 0) && (G != 0))
 		{
-			Y = Y * (NOK(Z, H) / Z);
-			G = G * (NOK(Z, H) / H);
-			Z = H = NOK(Z, H);
+			if (Z != H)
+			{
+				Y = Y * (NOK(Z, H) / Z);
+				G = G * (NOK(Z, H) / H);
+				Z = H = NOK(Z, H);
+			}
+			A = X + F; B = Y + G; C = NOK(Z, H);
+			A = A + B / C; while (B >= Z) B = B - C;
+			n = NOD(B, C); B = B / n; C = C / n;
 		}
-		A = X + F; B = Y + G; C = NOK(Z, H);
-		A = A + B / C; while (B >= Z) B = B - C;
-		n = NOD(B, C); B = B / n; C = C / n;
+		else
+		{
+			if (Y == 0)
+			{
+				if (G == 0) { A = X + F; B = 0; C = 0; }
+				else { A = X + F; B = G; C = H; }
+			}
+			else
+			{
+				if (G == 0) { A = X + F; B = Y; C = Z; }
+			}
+		}
 		output(A, B, C);
 		break;
 	case '-': 
 		if (X >= F)
 		{
-			if (Z != H)
+			if ((Y != 0) && (G != 0))
 			{
-				Y = Y * (NOK(Z, H) / Z);
-				G = G * (NOK(Z, H) / H);
-				Z = H = NOK(Z, H);
+				if (Z != H)
+				{
+					Y = Y * (NOK(Z, H) / Z);
+					G = G * (NOK(Z, H) / H);
+					Z = H = NOK(Z, H);
+				}
+
+				if (Y < G) { X -= 1; Y += Z; }
+
+				A = X - F; B = Y - G; C = NOK(Z, H);
+				A = A + B / C;
+				while (B >= Z) B = B - C; 
 			}
-
-			if (Y < G) { X -= 1; Y += Z; }
-
-			A = X - F; B = Y - G; C = NOK(Z, H);
-			A = A + B / C;
-			while (B >= Z) B = B - C;
+			else
+			{
+				if (Y == 0)
+				{
+					if (G == 0) { A = X - F; B = 0; C = 0; }
+					else { A = X - F - 1; B = H - G; C = H; }
+				}
+				else
+				{
+					if (G == 0) { A = X - F; B = Y; C = Z; }
+				}
+			}
 		}
 		else
 		{
-			if (Z != H)
+			if ((Y != 0) && (G != 0))
 			{
-				Y = Y * (NOK(Z, H) / Z);
-				G = G * (NOK(Z, H) / H);
-				Z = H = NOK(Z, H);
+				if (Z != H)
+				{
+					Y = Y * (NOK(Z, H) / Z);
+					G = G * (NOK(Z, H) / H);
+					Z = H = NOK(Z, H);
+				}
+
+				if (G < Y) { F -= 1; G += H; }
+
+				A = (F - X) * -1; B = G - Y;
+				C = NOK(Z, H); A = A - B / C;
+				while (B >= Z) B = B - C;
 			}
-
-			if (G < Y) { F -= 1; G += H; }
-
-			A = (F - X) * -1; B = G - Y;
-			C = NOK(Z, H); A = A - B / C;
-			while (B >= Z) B = B - C;
+			else
+			{
+				if (G == 0)
+				{
+					if (Y == 0) { A = (F - X) * -1; B = 0; C = 0; }
+					else { A = (F - X - 1) * -1; B = H - G; C = H; }
+				}
+				else
+				{
+					if (Y == 0) { A = (F - X - 1) * -1; B = Z - Y; C = Z; }
+				}
+			}
 		}
 		output(A, B, C);
 		break;
